@@ -49,9 +49,6 @@ def main_test():
             else:
                 print("Please enter yes or no!")
 
-
-
-
 def compare_word(s1,s2):
     n = 0
     score = 0
@@ -71,10 +68,10 @@ class Graph:
     def insertVertext(self,word):
         vertex = Vertex(word)
         for v in self.verList:
-            w =compare_word(word,v.getKey())
+            w =compare_word(word,v.key())
             if w != 0:
                 v.insertEdge(word,w)
-                vertex.insertEdge(v.getKey(),w)
+                vertex.insertEdge(v.key(),w)
         self.verList[word] = vertex
 
     def getVerList(self):
