@@ -68,10 +68,10 @@ class Graph:
     def insertVertext(self,word):
         vertex = Vertex(word)
         for v in self.verList:
-            w =compare_word(word,v.key())
+            w =compare_word(word,v)
             if w != 0:
-                v.insertEdge(word,w)
-                vertex.insertEdge(v.key(),w)
+                self.verList[v].insertEdge(word,w)
+                vertex.insertEdge(v,w)
         self.verList[word] = vertex
 
     def getVerList(self):
