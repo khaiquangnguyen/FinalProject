@@ -1,27 +1,50 @@
 import sys
 
-# def main():
-#     # read in the input
-#     print len(sys.argv)
-#     if len(sys.argv) != 2:
-#         print ("Incorrect number of arguements!")
-#         exit()
-#     else:
-#         try:
-#             f = open(str(sys.argv[1]), 'r')
-#         except:
-#             print("No such file or directory!")
-#             exit()
-#         else:
-#             graph = Graph()
-#             for line in f.readlines():
-#                 graph.insertVertext(line)
-#
+def main():
+    # read in the input
+    print len(sys.argv)
+    if len(sys.argv) != 2:
+     print ("Incorrect number of arguements!")
+     exit()
+    else:
+     try:
+         f = open(str(sys.argv[1]), 'r')
+     except:
+         print("No such file or directory!")
+         exit()
+     else:
+        graph = Graph()
+        for lines in f.readlines():
+            line = lines.split()
+            for word in line:
+                graph.insertVertext(word)
+        vlist = graph.getVerList()
+        while True:
+            s = raw_input("Enter a five-letter word: ")
+            s = s.upper()
+            if s in vlist:
+                print ("The neighbors of " + s + " are:")
+                edge = vlist[s].edge
+                while edge is not None:
+                    edge.print_edge()
+                    edge = edge.getNext()
+            else:
+                print ("Sorry! " + s + " is not in the list.")
+            while (True):
+                s = raw_input("Do you want to try another word. Enter yes or no? ")
+                s = s.lower()
+                if s == 'n' or s =='no':
+                    exit()
+                elif s == 'y' or s=='yes':
+                    break
+                else:
+                    print("Please enter yes or no!")
+
 
 
 
 def main_test():
-    f = open("5lw.dat", 'r')
+    f = open("5lw-m.dat", 'r')
     graph = Graph()
     for lines in f.readlines():
         line = lines.split()
@@ -29,10 +52,10 @@ def main_test():
             graph.insertVertext(word)
     vlist = graph.getVerList()
     while True:
-        s = raw_input("Enter a five-letter word:")
+        s = raw_input("Enter a five-letter word: ")
         s = s.upper()
         if s in vlist:
-            print ("The neighbors of " + s + "are:")
+            print ("The neighbors of " + s + " are:")
             edge = vlist[s].edge
             while edge is not None:
                 edge.print_edge()
@@ -40,7 +63,7 @@ def main_test():
         else:
             print ("Sorry! " + s + " is not in the list.")
         while (True):
-            s = raw_input("Do you want to try another word. Enter yes or no?")
+            s = raw_input("Do you want to try another word. Enter yes or no? ")
             s = s.lower()
             if s == 'n' or s =='no':
                 exit()
@@ -48,6 +71,7 @@ def main_test():
                 break
             else:
                 print("Please enter yes or no!")
+
 
 def compare_word(s1,s2):
     n = 0
@@ -127,7 +151,7 @@ class Vertex:
     def getHandle(self):
         return self.handle
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()
 
-main_test()
+##main_test()
