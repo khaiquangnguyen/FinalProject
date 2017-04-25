@@ -31,21 +31,9 @@ def main_test():
     while True:
         s = raw_input("Enter a five-letter word:")
         s = s.upper()
-        first = 0
-        last = len(vlist) - 1
-        found = False
-        while first <= last and not found:
-            mid = (first + last) // 2
-            if vlist[mid].getKey() == s:
-                found = True
-            else:
-                if s > vlist[mid].getKey():
-                    first = mid + 1
-                else:
-                    last = mid -1
-        if found is True:
+        if s in vlist:
             print ("The neighbors of " + s + "are:")
-            edge = vlist[mid].edge
+            edge = vlist[s].edge
             while edge is not None:
                 edge.print_edge()
                 edge = edge.getNext()
@@ -78,7 +66,7 @@ def compare_word(s1,s2):
 
 class Graph:
     def __init__(self):
-        self.verList = []
+        self.verList = {}
 
     def insertVertext(self,word):
         vertex = Vertex(word)
@@ -87,7 +75,7 @@ class Graph:
             if w != 0:
                 v.insertEdge(word,w)
                 vertex.insertEdge(v.getKey(),w)
-        self.verList.append(vertex)
+        self.verList[word] = vertex
 
     def getVerList(self):
         return self.verList
