@@ -61,6 +61,7 @@ def distance(vdict,s1,s2):
             if u.distance + v.getWeight() <= vdict[v.getKey()].distance:
                 vdict[v.getKey()].parent = u
                 vdict[v.getKey()].distance = u.distance + v.getWeight()
+                Q.heapifyUp(vdict[v.getKey()].getHandle())
             v = v.getNext()
 
 def main_test():
@@ -74,15 +75,19 @@ def main_test():
             graph.insertVertex(word)
     vdict = graph.getVerDict()
     while True:
-        s1 = raw_input("Enter the first five-letter word: ")
+        s1 = "codes"
         s1 = s1.upper()
-        s2 = raw_input("Enter the second five-letter word: ")
+        s2 = "beast"
         s2 = s2.upper()
         if s1 in vdict and s2 in vdict:
-            path = distance(vdict,s1,s2)
-            print (path[-1].distance)
-            for v in path:
-                print v.word
+            target = distance(vdict, s1, s2)
+            print target.distance
+            output = []
+            while target is not None:
+                output = [target.word] + output
+                target = target.parent
+            for i in output:
+                print i
 
         else:
             print ("Sorry! " + s1 + " or " + s2 + " is not in the list.")
@@ -180,7 +185,7 @@ class Vertex:
     def getHandle(self):
         return self.handle
     
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+    #main()
 
-# main_test()
+main_test()
