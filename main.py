@@ -18,18 +18,21 @@ def main():
             line = lines.split()
             for word in line:
                 graph.insertVertex(word)
-        vdict = graph.getVerDict()
         while True:
+            vdict = graph.getVerDict()
             s1 = raw_input("Enter the first five-letter word: ")
             s1 = s1.upper()
             s2 = raw_input("Enter the second five-letter word: ")
             s2 = s2.upper()
             if s1 in vdict and s2 in vdict:
-                path = distance(vdict,s1,s2)
-                print (path[-1].distance)
-                for v in path:
-                    print v.word
-
+                target = distance(vdict,s1,s2)
+                print target.distance
+                output = [] 
+                while target is not None:
+                    output = [target.word] + output
+                    target = target.parent
+                for i in output:
+                    print i
             else:
                 print ("Sorry! " + s1 + " or " + s2 + " is not in the list.")
             while (True):
@@ -47,15 +50,13 @@ def distance(vdict,s1,s2):
         vdict[v].reinit()
     vdict[s1].distance = 0
     Q = Heap()
-    pathList = []
     for v in vdict:
         Q.insert(vdict[v])
     while Q.getHeapsize() != 0:
         u = Q.removeMin()
         v = u.edge
-        pathList.append(u)
         if u.word == s2:
-            return pathList
+            return u
         while v is not None:
             if u.distance + v.getWeight() <= vdict[v.getKey()].distance:
                 vdict[v.getKey()].parent = u
@@ -168,7 +169,8 @@ class Vertex:
     def reinit(self):
         self.parent = None
         self.distance = sys.maxint
-
+        self.handle = 0
+        
     def getKey(self):
         return self.distance
 
@@ -178,7 +180,7 @@ class Vertex:
     def getHandle(self):
         return self.handle
     
-# if __name__ == "__main__":
-    # main()
+if __name__ == "__main__":
+    main()
 
-main_test()
+# main_test()
