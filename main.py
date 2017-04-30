@@ -20,24 +20,14 @@ def main():
                 graph.insertVertext(word)
         vlist = graph.getVerList()
         while True:
-            s = raw_input("Enter a five-letter word: ")
-            s = s.upper()
-            if s in vlist:
-                print ("The neighbors of " + s + " are: ")
-                edge = vlist[s].edge
-                count = 0
-                s = ''
-                while edge is not None:
-                    if count == 6:
-                        print s
-                        s = ''
-                        count = 0
-                    count += 1
-                    s = s + edge.print_edge() + "     "
-                    edge = edge.getNext()
-                print s
+            s1 = raw_input("Enter the first five-letter word: ")
+            s1 = s1.upper()
+            s2 = raw_input("Enter the second five-letter word: ")
+            s2 = s2.upper()
+            if s1 in vlist and s2 in vlist:
+                print "Input successful!"
             else:
-                print ("Sorry! " + s + " is not in the list.")
+                print ("Sorry! " + s1 + " or " + s2 + " is not in the list.")
             while (True):
                 s = raw_input("Do you want to try another word. Enter yes or no? ")
                 s = s.lower()
