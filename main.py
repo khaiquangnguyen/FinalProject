@@ -2,9 +2,8 @@ import sys
 
 def main():
     # read in the input
-    print len(sys.argv)
     if len(sys.argv) != 2:
-     print ("Incorrect number of arguements!")
+     print ("Incorrect number of arguments!")
      exit()
     else:
      try:
@@ -14,6 +13,7 @@ def main():
          exit()
      else:
         graph = Graph()
+        print ("Building graph...")
         for lines in f.readlines():
             line = lines.split()
             for word in line:
@@ -23,11 +23,19 @@ def main():
             s = raw_input("Enter a five-letter word: ")
             s = s.upper()
             if s in vlist:
-                print ("The neighbors of " + s + " are:")
+                print ("The neighbors of " + s + " are: ")
                 edge = vlist[s].edge
+                count = 0
+                s = ''
                 while edge is not None:
-                    edge.print_edge()
+                    if count == 6:
+                        print s
+                        s = ''
+                        count = 0
+                    count += 1
+                    s = s + edge.print_edge() + "     "
                     edge = edge.getNext()
+                print s
             else:
                 print ("Sorry! " + s + " is not in the list.")
             while (True):
@@ -39,7 +47,6 @@ def main():
                     break
                 else:
                     print("Please enter yes or no!")
-
 
 
 
@@ -55,19 +62,19 @@ def main_test():
         s = raw_input("Enter a five-letter word: ")
         s = s.upper()
         if s in vlist:
-            print ("The neighbors of " + s + " are:")
+            print("The neighbors of " + s + " are:")
             edge = vlist[s].edge
             while edge is not None:
                 edge.print_edge()
                 edge = edge.getNext()
         else:
-            print ("Sorry! " + s + " is not in the list.")
+            print("Sorry! " + s + " is not in the list.")
         while (True):
             s = raw_input("Do you want to try another word. Enter yes or no? ")
             s = s.lower()
             if s == 'n' or s =='no':
                 exit()
-            elif s == 'y' or s=='yes':
+            elif s == 'y' or s =='yes':
                 break
             else:
                 print("Please enter yes or no!")
@@ -78,12 +85,15 @@ def compare_word(s1,s2):
     score = 0
     for i in range(5):
         if s1[i] != s2[i]:
-            score =5**(n)
+            score = 5 ** n
             n+=1
-    if n == 0 or n >= 3:
+            if n >= 3:
+                return 0
+    if n == 0:
         return 0
     else:
         return score
+
 
 class Graph:
     def __init__(self):
@@ -92,7 +102,7 @@ class Graph:
     def insertVertext(self,word):
         vertex = Vertex(word)
         for v in self.verList:
-            w =compare_word(word,v)
+            w = compare_word(word,v)
             if w != 0:
                 self.verList[v].insertEdge(word,w)
                 vertex.insertEdge(v,w)
@@ -126,7 +136,7 @@ class Edge:
         return self.next
 
     def print_edge(self):
-        print (self.neighbor + "(" + str(self.weight) + ")")
+        return self.neighbor + "(" + str(self.weight) + ")"
 
 class Vertex:
     def __init__(self, word):
