@@ -41,7 +41,7 @@ def main():
                     break
                 else:
                     print("Please enter yes or no!")
-
+    
 def distance(vdict,s1,s2):
     for v in vdict:
         vdict[v].reinit()
@@ -63,34 +63,37 @@ def distance(vdict,s1,s2):
             v = v.getNext()
 
 def main_test():
-    f = open("5lw-m.dat", 'r')
+    f = open("5lw-s.dat", 'r')
+     # read in the input
     graph = Graph()
+    print ("Building graph...")
     for lines in f.readlines():
         line = lines.split()
         for word in line:
             graph.insertVertex(word)
-    vlist = graph.getVerDict()
+    vdict = graph.getVerDict()
     while True:
-        s = raw_input("Enter a five-letter word: ")
-        s = s.upper()
-        if s in vlist:
-            print("The neighbors of " + s + " are:")
-            edge = vlist[s].edge
-            while edge is not None:
-                edge.print_edge()
-                edge = edge.getNext()
+        s1 = raw_input("Enter the first five-letter word: ")
+        s1 = s1.upper()
+        s2 = raw_input("Enter the second five-letter word: ")
+        s2 = s2.upper()
+        if s1 in vdict and s2 in vdict:
+            path = distance(vdict,s1,s2)
+            print (path[-1].distance)
+            for v in path:
+                print v.word
+
         else:
-            print("Sorry! " + s + " is not in the list.")
+            print ("Sorry! " + s1 + " or " + s2 + " is not in the list.")
         while (True):
             s = raw_input("Do you want to try another word. Enter yes or no? ")
             s = s.lower()
             if s == 'n' or s =='no':
                 exit()
-            elif s == 'y' or s =='yes':
+            elif s == 'y' or s=='yes':
                 break
             else:
                 print("Please enter yes or no!")
-
 def compare_word(s1,s2):
     n = 0
     score = 0
@@ -175,7 +178,7 @@ class Vertex:
     def getHandle(self):
         return self.handle
     
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+    # main()
 
-##main_test()
+main_test()
