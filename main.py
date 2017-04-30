@@ -19,9 +19,8 @@ import sys
 #
 
 
-
 def main_test():
-    f = open("5lw.dat", 'r')
+    f = open("5lw-m.dat", 'r')
     graph = Graph()
     for lines in f.readlines():
         line = lines.split()
@@ -34,9 +33,15 @@ def main_test():
         if s in vlist:
             print ("The neighbors of " + s + "are:")
             edge = vlist[s].edge
+            count = 0
             while edge is not None:
+                if count == 6:
+                    print ''
+                    count = 0
+                count += 1
                 edge.print_edge()
                 edge = edge.getNext()
+            print ''
         else:
             print ("Sorry! " + s + " is not in the list.")
         while (True):
@@ -56,6 +61,8 @@ def compare_word(s1,s2):
         if s1[i] != s2[i]:
             score =5**(n)
             n+=1
+            if n >=3 :
+                break
     if n == 0 or n >= 3:
         return 0
     else:
@@ -66,6 +73,7 @@ class Graph:
         self.verList = {}
 
     def insertVertext(self,word):
+        print word
         vertex = Vertex(word)
         for v in self.verList:
             w =compare_word(word,v)
@@ -102,7 +110,7 @@ class Edge:
         return self.next
 
     def print_edge(self):
-        print (self.neighbor + "(" + str(self.weight) + ")")
+        print self.neighbor + "(" + str(self.weight) + ")",
 
 class Vertex:
     def __init__(self, word):
