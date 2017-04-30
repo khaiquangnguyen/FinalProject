@@ -28,7 +28,7 @@ def main():
                 path = distance(vdict,s1,s2)
                 print (path[-1].distance)
                 for v in path:
-                    print (v.getKey())
+                    print v.word
 
             else:
                 print ("Sorry! " + s1 + " or " + s2 + " is not in the list.")
@@ -54,15 +54,13 @@ def distance(vdict,s1,s2):
         u = Q.removeMin()
         v = u.edge
         pathList.append(u)
-        if u.getKey() == s2:
+        if u.word == s2:
             return pathList
         while v is not None:
             if u.distance + v.getWeight() <= vdict[v.getKey()].distance:
                 vdict[v.getKey()].parent = u
                 vdict[v.getKey()].distance = u.distance + v.getWeight()
             v = v.getNext()
-
-
 
 def main_test():
     f = open("5lw-m.dat", 'r')
@@ -154,7 +152,7 @@ class Edge:
 class Vertex:
     def __init__(self, word):
         self.handle = 0
-        self.key = word
+        self.word = word
         self.parent = None
         self.distance = sys.maxint
         self.edge = None
@@ -168,11 +166,8 @@ class Vertex:
         self.parent = None
         self.distance = sys.maxint
 
-    def setKey(self, word):
-        self.key = word
-
     def getKey(self):
-        return self.key
+        return self.distance
 
     def setHandle(self, inHandle):
         self.handle = inHandle
