@@ -1,4 +1,3 @@
-from HeapInt import *
 
 '''*
  * An implementation of a minimum heap with handles
